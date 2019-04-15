@@ -1,13 +1,16 @@
-IMAGE := esolitos/jackett
+IMAGE ?= esolitos/jackett
+JACKETT_VER ?= $(shell echo "${JACKETT_VER:-latest}")
+
+TAG ?= $(JACKETT_VER)
 
 test:
 	true
 
 image:
-	docker build -t $(IMAGE) .
+	docker build -t $(IMAGE):$(TAG) --build-arg JACKETT_VER=$(JACKETT_VER) .
 
-push-image:
-	docker push $(IMAGE)
+push:
+	docker push $(IMAGE):$(TAG)
 
 
-.PHONY: image push-image test
+.PHONY: image push test
