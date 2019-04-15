@@ -1,4 +1,9 @@
-# esolitos/jackett
+# Jackett/Jackett Docker image
+[![Build Status](https://travis-ci.org/esolitos/docker-jackett.svg?branch=master)](https://travis-ci.org/esolitos/docker-jackett)
+[![Image Size](https://images.microbadger.com/badges/image/esolitos/jackett.svg)](http://microbadger.com/images/esolitos/jackett)
+[![Docker Stars](https://img.shields.io/docker/stars/esolitos/jackett.svg?style=flat-square)](https://hub.docker.com/r/esolitos/jackett/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/esolitos/jackett.svg?style=flat-square)](https://hub.docker.com/r/esolitos/jackett/)
+
 Docker image for [`Jackett/Jackett`](https://github.com/Jackett/Jackett)
 
 
