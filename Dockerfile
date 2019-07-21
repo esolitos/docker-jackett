@@ -1,4 +1,4 @@
-FROM mono:5.20.1-slim
+FROM mono:5.20.1
 
 ARG VERSION
 # ARG VERSION="0.11.219"
