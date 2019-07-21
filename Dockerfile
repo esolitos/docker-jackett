@@ -1,4 +1,4 @@
-FROM mono:5.20.1
+FROM mono:5.20.1-slim
 
 ARG VERSION
 # ARG VERSION="0.11.219"
@@ -12,10 +12,11 @@ ENV XDG_DATA_HOME="/mnt/data" \
 
 RUN set -xeuf ; \
   \
-  apt-get update && apt-get install --no-install-recommends --no-upgrade --yes wget ; \
+  apt-get update && apt-get install --no-install-recommends --no-upgrade --yes \
+  wget gosu ; \
   \
-  addgroup --gid 1000 --system jackett && \
-	 adduser --uid 1000 --gid 1000 --disabled-password --disabled-login --system jackett ; \
+  # Ensure gosu works.
+  gosu nobody true ; \
   \
   if [ "${JACKETT_VER:-}" = 'latest' ] ; \
     then url="${JACKET_REPO}/latest/download/${JACKETT_ARCHIVE}" ; \
@@ -23,8 +24,7 @@ RUN set -xeuf ; \
   fi ; \
   \
   mkdir -p /var/app /mnt/data /mnt/config && \
-    wget -qO-  "${url}" | tar xz -C /var/app --strip-components=1 && \
-      chown -vR jackett:jackett /var/app /mnt/data /mnt/config ; \
+    wget -qO-  "${url}" | tar xz -C /var/app --strip-components=1 ; \
   \
   apt-get remove --purge --auto-remove --yes wget && \
     apt-get clean --yes && \
@@ -33,8 +33,11 @@ RUN set -xeuf ; \
         /var/lib/apt/lists/* \
         /var/tmp/* ;
 
-USER jackett
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 VOLUME ["/mnt/data", "/mnt/config"]
 
 EXPOSE 9117
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
