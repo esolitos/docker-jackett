@@ -14,4 +14,4 @@ chown -vR $USER_ID:$USER_ID /var/app /mnt/data /mnt/config
 
 export HOME=/home/user
 
-exec /usr/local/bin/gosu user "$@"
+exec /usr/sbin/gosu user "$@"
